@@ -1,27 +1,39 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pk/models/catalog_model.dart';
 import 'package:flutter_pk/widgets/drawer.dart';
 
-class HomePage extends StatelessWidget {
-  final list = [
-    CatalogModel(
-        id: 1,
-        name: 'iphone 10',
-        desc: 'Apple iphone 10',
-        icon: Icons.phone_android),
-    CatalogModel(
-        id: 2,
-        name: 'iphone 11',
-        desc: 'Apple iphone 11',
-        icon: Icons.phone_android),
-    CatalogModel(
-        id: 3,
-        name: 'iphone 12',
-        desc: 'Apple iphone 12',
-        icon: Icons.phone_android),
-  ];
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-  HomePage({super.key});
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<CatalogModel> list = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadMyJsonData();
+  }
+
+  loadMyJsonData() async {
+    await Future.delayed(
+      const Duration(seconds: 2),
+    );
+    final catalogJson =
+        await rootBundle.loadString('assets/files/catalog.json');
+    final catalogDecodedJson = jsonDecode(catalogJson);
+    var catalogProductsData = catalogDecodedJson['products'];
+    list = List.from(catalogProductsData)
+        .map<CatalogModel>((e) => CatalogModel.fromMap(e))
+        .toList();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +42,23 @@ class HomePage extends StatelessWidget {
         title: const Text('Catalog App'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              leading: Icon(list[index].icon),
-              title: Text(list[index].name),
-              subtitle: Text(list[index].desc),
-              trailing: Icon(Icons.monetization_on),
+      body: list.isNotEmpty
+          ? ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    leading: Image.network(list[index].image),
+                    title: Text(list[index].name),
+                    subtitle: Text(list[index].desc),
+                    trailing: Text("\$${list[index].price.toString()}"),
+                  ),
+                );
+              },
+            )
+          : const Center(
+              child: CircularProgressIndicator(),
             ),
-          );
-        },
-      ),
       drawer: const MyDrawer(),
     );
   }
