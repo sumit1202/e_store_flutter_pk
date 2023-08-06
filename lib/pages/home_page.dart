@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pk/models/catalog_model.dart';
+import 'package:flutter_pk/pages/home_details_page.dart';
 import 'package:flutter_pk/widgets/drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   loadMyJsonData() async {
     await Future.delayed(
-      const Duration(seconds: 2),
+      const Duration(seconds: 1),
     );
     final catalogJson =
         await rootBundle.loadString('assets/files/catalog.json');
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: catalogList.isNotEmpty
-          ? gridView()
+          ? listView()
           : const Center(
               child: CircularProgressIndicator(),
             ),
@@ -64,7 +65,9 @@ class _HomePageState extends State<HomePage> {
           child: GridTile(
             header: Text(catalogList[index].desc),
             footer: Text("\$${catalogList[index].price.toString()}"),
-            child: Image.network(catalogList[index].image),
+            child: Image.network(
+              catalogList[index].image,
+            ),
           ),
         );
       },
@@ -76,11 +79,33 @@ class _HomePageState extends State<HomePage> {
       itemCount: catalogList.length,
       itemBuilder: (context, index) {
         return Card(
+          elevation: 0,
           child: ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      HomeDetailsPage(catalog: catalogList[index]),
+                ),
+              );
+            },
             leading: Image.network(catalogList[index].image),
-            title: Text(catalogList[index].name),
+            title: Text(
+              catalogList[index].name,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
             subtitle: Text(catalogList[index].desc),
-            trailing: Text("\$${catalogList[index].price.toString()}"),
+            trailing: Text(
+              "\$${catalogList[index].price.toString()}",
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
           ),
         );
       },
