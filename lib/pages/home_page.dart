@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<CatalogModel> list = [];
+  List<CatalogModel> catalogList = [];
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         await rootBundle.loadString('assets/files/catalog.json');
     final catalogDecodedJson = jsonDecode(catalogJson);
     var catalogProductsData = catalogDecodedJson['products'];
-    list = List.from(catalogProductsData)
+    catalogList = List.from(catalogProductsData)
         .map<CatalogModel>((e) => CatalogModel.fromMap(e))
         .toList();
     setState(() {});
@@ -42,24 +42,48 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Catalog App'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: list.isNotEmpty
-          ? ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    leading: Image.network(list[index].image),
-                    title: Text(list[index].name),
-                    subtitle: Text(list[index].desc),
-                    trailing: Text("\$${list[index].price.toString()}"),
-                  ),
-                );
-              },
-            )
+      body: catalogList.isNotEmpty
+          ? gridView()
           : const Center(
               child: CircularProgressIndicator(),
             ),
       drawer: const MyDrawer(),
+    );
+  }
+
+  GridView gridView() {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+      ),
+      itemCount: catalogList.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: GridTile(
+            header: Text(catalogList[index].desc),
+            footer: Text("\$${catalogList[index].price.toString()}"),
+            child: Image.network(catalogList[index].image),
+          ),
+        );
+      },
+    );
+  }
+
+  ListView listView() {
+    return ListView.builder(
+      itemCount: catalogList.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: ListTile(
+            leading: Image.network(catalogList[index].image),
+            title: Text(catalogList[index].name),
+            subtitle: Text(catalogList[index].desc),
+            trailing: Text("\$${catalogList[index].price.toString()}"),
+          ),
+        );
+      },
     );
   }
 }
