@@ -14,15 +14,15 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   moveToHome(BuildContext context) async {
-    if(_formKey.currentState!.validate()){
+    if (_formKey.currentState!.validate()) {
       setState(() {
-      isChanged = true;
-    });
-    await Future.delayed(const Duration(seconds: 2));
-    await Navigator.pushNamed(context, MyRoutes.homeRoute);
-    setState(() {
-      isChanged = false;
-    });
+        isChanged = true;
+      });
+      await Future.delayed(const Duration(seconds: 2));
+      await Navigator.pushNamed(context, MyRoutes.homeRoute);
+      setState(() {
+        isChanged = false;
+      });
     }
   }
 
@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Material(
                   borderRadius: BorderRadius.circular(50),
-                  color: Colors.teal,
+                  color: Theme.of(context).colorScheme.inversePrimary,
                   child: InkWell(
                     onTap: () => moveToHome(context),
                     child: AnimatedContainer(
@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                                  color: Colors.black),
                             ),
                     ),
                   ),

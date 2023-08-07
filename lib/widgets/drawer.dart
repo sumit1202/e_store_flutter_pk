@@ -62,12 +62,15 @@ class MyDrawer extends StatelessWidget {
                 style: TextStyle(color: Colors.black),
               ),
             ),
-            const ListTile(
-              leading: Icon(
+            ListTile(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, MyRoutes.loginRoute);
+              },
+              leading: const Icon(
                 Icons.logout_outlined,
                 color: Colors.black,
               ),
-              title: Text(
+              title: const Text(
                 'Logout',
                 style: TextStyle(color: Colors.black),
               ),

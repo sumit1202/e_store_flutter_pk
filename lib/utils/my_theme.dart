@@ -5,11 +5,13 @@ class MyTheme {
   final lightThemeData = ThemeData(
     useMaterial3: true,
     fontFamily: GoogleFonts.lato().fontFamily,
+    buttonTheme: const ButtonThemeData(buttonColor: Colors.greenAccent),
     colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
   );
   final darkThemeData = ThemeData(
     useMaterial3: true,
     fontFamily: GoogleFonts.lato().fontFamily,
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent),
+    buttonTheme: const ButtonThemeData(buttonColor: Colors.green),
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
   );
 }

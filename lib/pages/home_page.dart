@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,34 +52,13 @@ class _HomePageState extends State<HomePage> {
       drawer: const MyDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          setState(() {});
           Navigator.pushNamed(context, MyRoutes.cartRoute);
         },
         child: const Icon(CupertinoIcons.cart),
       ),
     );
   }
-
-  // GridView gridView() {
-  //   return GridView.builder(
-  //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-  //       crossAxisCount: 2,
-  //       mainAxisSpacing: 10,
-  //       crossAxisSpacing: 10,
-  //     ),
-  //     itemCount: catalogList.length,
-  //     itemBuilder: (context, index) {
-  //       return Card(
-  //         child: GridTile(
-  //           header: Text(catalogList[index].desc),
-  //           footer: Text("\$${catalogList[index].price.toString()}"),
-  //           child: Image.network(
-  //             catalogList[index].image,
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 
   ListView listView() {
     return ListView.builder(
