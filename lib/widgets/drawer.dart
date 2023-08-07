@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pk/utils/routes.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -9,52 +11,65 @@ class MyDrawer extends StatelessWidget {
         'https://upload.wikimedia.org/wikipedia/commons/4/4f/Dash%2C_the_mascot_of_the_Dart_programming_language.png';
     return Drawer(
       child: Container(
-        color: Colors.teal,
+        color: Colors.white,
         child: ListView(
-          children: const [
+          children: [
             DrawerHeader(
-              margin: EdgeInsets.all(0),
-              padding: EdgeInsets.all(0),
+              margin: const EdgeInsets.all(0),
+              padding: const EdgeInsets.all(0),
               child: UserAccountsDrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.teal,
+                  color: Theme.of(context).colorScheme.inversePrimary,
                 ),
-                margin: EdgeInsets.all(0),
-                accountName: Text('Sumit Kumar'),
-                accountEmail: Text('sumitkumar@gmail.com'),
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(imgUrl),
+                margin: const EdgeInsets.all(0),
+                accountName: const Text(
+                  'Sumit Kumar',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+                accountEmail: const Text(
+                  'sumitkumar@gmail.com',
+                  style: TextStyle(color: Colors.black),
+                ),
+                currentAccountPicture: Image.network(imgUrl),
               ),
             ),
             ListTile(
-              leading: Icon(
-                Icons.home,
-                color: Colors.white,
+              onTap: () {
+                Navigator.pushNamed(context, MyRoutes.homeRoute);
+              },
+              leading: const Icon(
+                Icons.home_outlined,
+                color: Colors.black,
               ),
-              title: Text(
+              title: const Text(
                 'Home',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
             ),
             ListTile(
-              leading: Icon(
-                Icons.person,
-                color: Colors.white,
+              onTap: () {
+                Navigator.pushNamed(context, MyRoutes.cartRoute);
+              },
+              leading: const Icon(
+                CupertinoIcons.cart,
+                color: Colors.black,
               ),
-              title: Text(
-                'Profile',
-                style: TextStyle(color: Colors.white),
+              title: const Text(
+                'Cart',
+                style: TextStyle(color: Colors.black),
               ),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(
-                Icons.logout,
-                color: Colors.white,
+                Icons.logout_outlined,
+                color: Colors.black,
               ),
               title: Text(
                 'Logout',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
             ),
           ],

@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pk/models/catalog_model.dart';
 import 'package:flutter_pk/pages/home_details_page.dart';
+import 'package:flutter_pk/utils/routes.dart';
 import 'package:flutter_pk/widgets/drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -40,7 +42,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Catalog App'),
+        title: const Text('E-Store'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: catalogList.isNotEmpty
@@ -49,30 +51,36 @@ class _HomePageState extends State<HomePage> {
               child: CircularProgressIndicator(),
             ),
       drawer: const MyDrawer(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, MyRoutes.cartRoute);
+        },
+        child: const Icon(CupertinoIcons.cart),
+      ),
     );
   }
 
-  GridView gridView() {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-      ),
-      itemCount: catalogList.length,
-      itemBuilder: (context, index) {
-        return Card(
-          child: GridTile(
-            header: Text(catalogList[index].desc),
-            footer: Text("\$${catalogList[index].price.toString()}"),
-            child: Image.network(
-              catalogList[index].image,
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // GridView gridView() {
+  //   return GridView.builder(
+  //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+  //       crossAxisCount: 2,
+  //       mainAxisSpacing: 10,
+  //       crossAxisSpacing: 10,
+  //     ),
+  //     itemCount: catalogList.length,
+  //     itemBuilder: (context, index) {
+  //       return Card(
+  //         child: GridTile(
+  //           header: Text(catalogList[index].desc),
+  //           footer: Text("\$${catalogList[index].price.toString()}"),
+  //           child: Image.network(
+  //             catalogList[index].image,
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   ListView listView() {
     return ListView.builder(
@@ -80,6 +88,7 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (context, index) {
         return Card(
           elevation: 0,
+          color: Theme.of(context).cardColor,
           child: ListTile(
             onTap: () {
               Navigator.push(
@@ -90,7 +99,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             },
-            leading: Image.network(catalogList[index].image),
+            leading:
+                CircleAvatar(child: Image.network(catalogList[index].image)),
             title: Text(
               catalogList[index].name,
               style: const TextStyle(

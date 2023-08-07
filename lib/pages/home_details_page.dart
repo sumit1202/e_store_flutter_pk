@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pk/models/cart_model.dart';
 import 'package:flutter_pk/models/catalog_model.dart';
+import 'package:flutter_pk/utils/routes.dart';
 
 class HomeDetailsPage extends StatelessWidget {
   final CatalogModel catalog;
@@ -40,15 +43,24 @@ class HomeDetailsPage extends StatelessWidget {
                 fontSize: 14,
               ),
             ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.arrow_forward),
-            ),
             const Spacer(
               flex: 2,
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          cartList.add(catalog);
+          totalAmount = sum();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Added Item to Cart.'),
+            ),
+          );
+          Navigator.pushNamed(context, MyRoutes.cartRoute);
+        },
+        child: const Icon(CupertinoIcons.cart_badge_plus),
       ),
     );
   }

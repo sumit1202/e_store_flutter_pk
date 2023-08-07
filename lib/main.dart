@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pk/pages/home_details_page.dart';
+import 'package:flutter_pk/pages/cart_page.dart';
 import 'package:flutter_pk/pages/home_page.dart';
 import 'package:flutter_pk/pages/login_page.dart';
+import 'package:flutter_pk/utils/my_theme.dart';
 import 'package:flutter_pk/utils/routes.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,17 +18,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter pk',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        // fontFamily: GoogleFonts.lato().fontFamily,
-        fontFamily: GoogleFonts.lato().fontFamily,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
-      ),
+      themeMode: ThemeMode.system,
+      theme: MyTheme().lightThemeData,
+      darkTheme: MyTheme().darkThemeData,
+
       //home: const HomePage(),
       initialRoute: MyRoutes.homeRoute,
       routes: {
         MyRoutes.homeRoute: (context) => const HomePage(),
         MyRoutes.loginRoute: (context) => const LoginPage(),
+        MyRoutes.cartRoute: (context) => const CartPage(),
         // MyRoutes.homeDetailsRoute: (context) => const HomeDetailsPage(),
       },
     );
