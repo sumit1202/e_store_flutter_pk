@@ -1,6 +1,6 @@
 # flutter_pk
 
-Learning and revising the basics of Flutter and Dart in this 'E-Store' project.
+A Flutter project on developing a basic 'E-Store' application.
 
 # Few screenshots below(on iOS):
 
